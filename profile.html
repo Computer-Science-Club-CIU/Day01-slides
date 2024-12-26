@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Benjamin Oguntoye - Profile</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+
+      body {
+        font-family: "Roboto", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      }
+
+      .profile-card {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        padding: 40px;
+        max-width: 400px;
+        width: 100%;
+        transition: transform 0.3s ease;
+      }
+
+      .profile-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .profile-card img {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 30px;
+        border: 5px solid #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .profile-card img:hover {
+        transform: scale(1.05);
+      }
+
+      .profile-card h1 {
+        font-size: 28px;
+        margin: 10px 0;
+        color: #333;
+      }
+
+      .profile-card p {
+        font-size: 16px;
+        color: #666;
+        margin: 15px 0;
+        line-height: 1.5;
+      }
+
+      .profile-card .company {
+        font-weight: bold;
+        color: #007bff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .profile-card .company:hover {
+        color: #0056b3;
+      }
+
+      .profile-card .skills {
+        margin: 20px 0;
+        padding: 0;
+        list-style-type: none;
+      }
+
+      .profile-card .skills li {
+        display: inline-block;
+        background: #f0f0f0;
+        color: #333;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 14px;
+        margin: 5px;
+      }
+
+      .profile-card .cta {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 12px 24px;
+        color: #fff;
+        background: #007bff;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: bold;
+      }
+
+      .profile-card .cta:hover {
+        background: #0056b3;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="profile-card">
+      <img src="/3BEN0-5.jpg" alt="Benjamin Oguntoye" />
+      <h1>Benjamin Oguntoye</h1>
+      <p>
+        DevOps Engineer at
+        <a href="https://pageit.io" target="_blank" class="company">@Pageit</a>
+      </p>
+      <p>
+        Passionate about transforming IT operations through innovative
+        solutions.
+      </p>
+      <ul class="skills">
+        <li>Automation</li>
+        <li>Cloud Computing</li>
+        <li>CI/CD</li>
+        <li>Infrastructure as Code</li>
+      </ul>
+      <a href="https://github.com/yourprofile" target="_blank" class="cta"
+        >Visit my GitHub</a
+      >
+    </div>
+  </body>
+</html>

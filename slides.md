@@ -1083,3 +1083,481 @@ layout: end
 <!--
 This concludes our comprehensive deployment guide. Remember to always follow security best practices and maintain proper documentation.
 -->
+
+---
+layout: cover
+---
+# Day 2: Deploying a Simple Page on a Server
+
+
+
+---
+layout: default
+---
+
+# How to Deploy a static page with Nginx Webserver
+
+<div class="grid grid-cols-2 gap-4">
+
+<div>
+
+## Topics Covered
+- ssh access to a server
+- creating website files
+- Nginx Configuration
+- Deployment Process
+
+</div>
+
+<div>
+
+## Learning Objectives
+- Configure Nginx for deployment
+- Deploy a simple page
+</div>
+</div>
+
+---
+layout: default
+---
+
+# User Registration and Subdomain Creation
+
+<div class="grid grid-cols-2 gap-4">
+
+<div>
+
+## Registration Process
+1. Visit the registration page [register](https://csclub.benjys.me)
+2. Fill in the required details
+3. Submit the form
+4. ssh to the server with the instruction provided after registration
+
+</div>
+
+<div>
+
+## or scan qr code
+![QR Code](/benjst.png)
+
+</div>
+
+</div>
+
+---
+layout: default
+---
+
+# Accessing Your Server
+
+<div class="grid grid-cols-2 gap-4">
+
+<div>
+
+## SSH Access
+```bash
+# Connect to your server
+ssh username@server-ip
+
+# Example:
+ssh student1@192.168.1.100
+```
+
+## Initial Setup
+```bash
+# Navigate to home directory
+cd ~
+
+# Create index.html
+nano index.html
+```
+
+</div>
+
+<div>
+
+## Important Notes
+- Replace 'username' with your provided username
+- Use the password provided to you
+- Keep your credentials secure
+- Change password after first login
+
+</div>
+
+</div>
+
+---
+layout: default
+---
+
+# Customizing Your Profile
+
+<div class="grid grid-cols-2 gap-4">
+
+<div>
+
+## Required Changes
+1. Profile Image
+   ```html
+   <img src="/your-image.jpg" alt="Your Name" />
+   ```
+
+2. Personal Details
+   ```html
+   <h1>Your Name</h1>
+   <p>
+     Your Role at
+     <a href="your-company-url" class="company">
+       @CompanyName
+     </a>
+   </p>
+   ```
+
+</div>
+
+<div>
+
+## Additional Customization
+```html
+<!-- Update Skills -->
+<ul class="skills">
+  <li>Your Skill 1</li>
+  <li>Your Skill 2</li>
+  <li>Your Skill 3</li>
+</ul>
+
+<!-- Update Social Link -->
+<a href="https://github.com/yourusername"
+   class="cta">
+  Visit my GitHub
+</a>
+```
+
+</div>
+
+</div>
+
+---
+layout: default
+---
+
+# Profile Setup Steps
+
+<div class="grid grid-cols-2 gap-4">
+
+<div>
+
+## 1. Upload Your Image
+```bash
+# From your local machine
+scp your-image.jpg username@server-ip:~/
+
+# Rename if needed
+mv your-image.jpg profile.jpg
+```
+
+## 2. Edit index.html
+```bash
+# Open editor
+nano index.html
+
+# Copy the template
+# Replace the following:
+# - Image path
+# - Your name
+# - Your role
+# - Company details
+# - Skills list
+# - GitHub link
+```
+
+</div>
+
+<div>
+
+## 3. Verify Changes
+```bash
+# Check file permissions
+ls -l index.html
+
+# View your changes
+curl http://username.example.com
+
+# Test image loading
+curl -I http://username.example.com/your-image.jpg
+```
+
+## Common Issues
+- Image not loading
+- Incorrect file permissions
+- Syntax errors in HTML
+- Broken links
+- Missing closing tags
+
+</div>
+
+</div>
+
+---
+layout: default
+---
+
+# Testing Your Profile
+
+<div class="grid grid-cols-2 gap-4">
+
+<div>
+
+## Visual Checks
+- Profile image loads correctly
+- All text is visible
+- Links work properly
+- Skills are displayed
+- Layout is responsive
+
+## Browser Testing
+```bash
+# Get your subdomain URL
+echo "http://username.example.com"
+
+# Test in different browsers
+# - Chrome
+# - Firefox
+# - Safari
+# - Mobile devices
+```
+
+</div>
+
+<div>
+
+## Troubleshooting
+```bash
+# Check file ownership
+ls -l ~/index.html
+
+# Fix permissions if needed
+chmod 644 ~/index.html
+
+# Validate HTML
+curl -s localhost | html5validator
+
+# Check logs
+tail -f /var/log/nginx/error.log
+```
+
+</div>
+
+</div>
+---
+layout: default
+---
+
+# Nginx Configuration Guide
+
+<div class="grid grid-cols-2 gap-4">
+
+<div>
+
+## Step 1: Create Config File
+```bash
+# Create config file with your username
+sudo nano /etc/nginx/sites-available/<username>
+```
+
+## Step 2: Add Configuration
+```nginx
+server {
+    listen 80;
+    server_name <username>.benjys.me;
+
+    root /home/<username>;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+
+</div>
+
+<div>
+
+## Step 3: Create Symbolic Link
+```bash
+# Create symbolic link
+sudo ln -s /etc/nginx/sites-available/<username> \
+    /etc/nginx/sites-enabled/<username>
+```
+
+## Step 4: Test & Reload
+```bash
+# Test configuration
+sudo nginx -t
+
+# Reload Nginx
+sudo systemctl reload nginx
+```
+
+</div>
+
+</div>
+
+---
+layout: default
+---
+
+# Configuration Steps Explained
+
+<div class="grid grid-cols-2 gap-4">
+
+<div>
+
+## File Locations
+```mermaid {scale: 0.7}
+graph TD
+    A[/etc/nginx/sites-available/] -->|symlink| B[/etc/nginx/sites-enabled/]
+    C[/home/username/] -->|serves| D[index.html]
+```
+
+## Important Notes
+- Replace 'username' with your actual username
+- Ensure proper file permissions
+- Keep backup of original files
+- Follow naming conventions
+
+</div>
+
+<div>
+
+## Verification Steps
+```bash
+# Check site status
+curl -I http://username.benjys.me
+
+# View error logs
+sudo tail -f /var/log/nginx/error.log
+
+# View access logs
+sudo tail -f /var/log/nginx/access.log
+
+# Check permissions
+ls -la /home/username/index.html
+```
+
+</div>
+
+</div>
+
+---
+layout: default
+---
+
+# Troubleshooting Common Issues
+
+<div class="grid grid-cols-2 gap-4">
+
+<div>
+
+## Permission Issues
+```bash
+# Set correct ownership
+sudo chown -R username:username /home/username
+
+# Set correct permissions
+chmod 755 /home/username
+chmod 644 /home/username/index.html
+```
+
+## 404 Errors
+- Verify file exists
+- Check file permissions
+- Confirm correct path in config
+- Validate server_name
+
+</div>
+
+<div>
+
+## Configuration Errors
+```bash
+# Common fixes
+sudo nginx -t
+# Look for specific errors
+
+# Check syntax
+sudo nginx -t -c /etc/nginx/nginx.conf
+
+# View detailed errors
+journalctl -u nginx.service
+```
+
+## Quick Fixes
+- Restart Nginx: `sudo systemctl restart nginx`
+- Clear cache: `sudo rm -rf /var/cache/nginx/*`
+- Reset permissions: `sudo chmod -R 755 /var/www`
+
+</div>
+
+</div>
+
+---
+layout: default
+---
+
+# Security Best Practices
+
+<div class="grid grid-cols-2 gap-4">
+
+<div>
+
+## File Permissions
+```bash
+# Secure directory permissions
+find /home/username -type d -exec chmod 755 {} \;
+
+# Secure file permissions
+find /home/username -type f -exec chmod 644 {} \;
+
+# Protect configuration
+sudo chmod 600 /etc/nginx/sites-available/username
+```
+
+</div>
+
+<div>
+
+## Additional Security
+```nginx
+# Add to your server block
+server {
+    # Prevent directory listing
+    autoindex off;
+
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+
+    # Limit request size
+    client_max_body_size 1m;
+}
+```
+
+</div>
+
+</div>
+
+---
+layout: end
+---
+
+# Your Site is Live!
+
+<div class="text-center">
+Visit http://username.benjys.me to see your website
+</div>
+
+<div class="pt-8 text-gray-400">
+Remember to replace 'username' with your actual username
+</div>
