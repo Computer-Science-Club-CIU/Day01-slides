@@ -1160,7 +1160,7 @@ layout: default
 ssh username@server-ip
 
 # Example:
-ssh student1@192.168.1.100
+ssh <studentid>@34.60.144.175
 ```
 
 ## Initial Setup
@@ -1181,6 +1181,61 @@ nano index.html
 - Use the password provided to you
 - Keep your credentials secure
 - Change password after first login
+
+</div>
+
+</div>
+
+---
+layout: default
+---
+
+# Nginx Configuration Guide
+
+<div class="grid grid-cols-2 gap-4">
+
+<div>
+
+## Step 1: Create Config File
+```bash
+# Create config file with your username
+sudo nano /etc/nginx/sites-available/<username>
+```
+
+## Step 2: Add Configuration
+```nginx
+server {
+    listen 80;
+    server_name <username>.benjys.me;
+
+    root /home/<username>;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+
+</div>
+
+<div>
+
+## Step 3: Create Symbolic Link
+```bash
+# Create symbolic link
+sudo ln -s /etc/nginx/sites-available/<username> \
+    /etc/nginx/sites-enabled/<username>
+```
+
+## Step 4: Test & Reload
+```bash
+# Test configuration
+sudo nginx -t
+
+# Reload Nginx
+sudo systemctl reload nginx
+```
 
 </div>
 
@@ -1344,60 +1399,6 @@ curl -s localhost | html5validator
 
 # Check logs
 tail -f /var/log/nginx/error.log
-```
-
-</div>
-
-</div>
----
-layout: default
----
-
-# Nginx Configuration Guide
-
-<div class="grid grid-cols-2 gap-4">
-
-<div>
-
-## Step 1: Create Config File
-```bash
-# Create config file with your username
-sudo nano /etc/nginx/sites-available/<username>
-```
-
-## Step 2: Add Configuration
-```nginx
-server {
-    listen 80;
-    server_name <username>.benjys.me;
-
-    root /home/<username>;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-}
-```
-
-</div>
-
-<div>
-
-## Step 3: Create Symbolic Link
-```bash
-# Create symbolic link
-sudo ln -s /etc/nginx/sites-available/<username> \
-    /etc/nginx/sites-enabled/<username>
-```
-
-## Step 4: Test & Reload
-```bash
-# Test configuration
-sudo nginx -t
-
-# Reload Nginx
-sudo systemctl reload nginx
 ```
 
 </div>
